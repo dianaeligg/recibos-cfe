@@ -5,6 +5,9 @@ const path = require("path");
 
 const morgan = require("morgan");
 app.use(morgan("dev"));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
