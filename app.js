@@ -9,6 +9,11 @@ app.use(express.json());
 
 var db = require("./models");
 
+app.get("/", (req, res) => {
+  console.log("========== / ============");
+  res.send("HI");
+});
+
 app.get("/api/bills", (req, res) => {
   console.log("========== api/bills ============");
   db.Bill.findAll().then((data) => {
