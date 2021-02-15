@@ -11,7 +11,7 @@ var db = require("./models");
 
 app.get("/", (req, res) => {
   console.log("========== / ============");
-  res.send("HI");
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 app.get("/api/bills", (req, res) => {
