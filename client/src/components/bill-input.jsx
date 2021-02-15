@@ -36,7 +36,7 @@ export default function BillInput() {
   };
   return (
     <>
-      <pre>{JSON.stringify(mutation.data, null, 2)} </pre>
+      {/* <pre>{JSON.stringify(mutation.data, null, 2)} </pre> */}
       <input
         type="text"
         id="bill-input"

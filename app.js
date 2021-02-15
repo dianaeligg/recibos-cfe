@@ -36,5 +36,5 @@ app.post("/api/bill", ({ body }, res) => {
 });
 
 db.sequelize.sync({ force: false }).then(function () {
-  app.listen(port, () => console.log(`Listening on Port ${port}`));
+  app.listen(PORT, () => console.log(`Listening on Port ${PORT}`));
 });
