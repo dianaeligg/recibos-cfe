@@ -8,6 +8,7 @@ import BillTable from "../components/bill-table";
 const queryClient = new QueryClient();
 
 function Main() {
+  console.log("MAIN");
   return (
     <QueryClientProvider client={queryClient}>
       <div className="Main">
