@@ -1,0 +1,35 @@
+.billInput {
+  width: 40%;
+  height: 40px;
+  border-radius: 4px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.createBillButton {
+  border: none;
+  box-shadow: 2px 3px 6px -4px #276873;
+  background-color: #599bb3;
+  border-radius: 8px;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 13px 32px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #3d768a;
+  margin: 12px 0;
+  &:hover {
+    background-color: #408c99;
+  }
+  &:active,
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}

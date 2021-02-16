@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+import "./bill-input.scss";
 
 export default function BillInput() {
   const [isAutomaticChecked, setIsAutomaticChecked] = useState(false);
@@ -7,43 +8,46 @@ export default function BillInput() {
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(async (data) => {
-    console.log({ data });
+  const { isLoading, mutate: saveRecord } = useMutation(async (value) => {
+    console.log({ value });
     const response = await fetch("/api/bill", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ info: "01 977850700064 210129 000000232 1" }),
+      body: JSON.stringify({ info: value }),
     });
     return response.json();
   });
 
   const handleTextChange = ({ target: { value } }) => {
-    if (value.length > 10 && isAutomaticChecked) {
-      setTextValue("");
-    } else if (value.length > 10 && !isAutomaticChecked) {
+    value = value.replace(/\s/g, "");
+    console.log({ value }, value.length);
+    if (value.length > 29 && isAutomaticChecked) {
+      console.log("saving");
+      saveRecord(value);
+      // setTextValue("");
+    } else if (value.length > 30 && !isAutomaticChecked) {
     } else {
       setTextValue(value);
     }
   };
 
   const handleSubmit = () => {
-    mutation.mutate(
-      { id: "value" },
-      { onSuccess: () => queryClient.invalidateQueries() }
-    );
+    saveRecord(textValue, { onSuccess: () => queryClient.invalidateQueries() });
   };
   return (
     <>
-      {/* <pre>{JSON.stringify(mutation.data, null, 2)} </pre> */}
-      <input
-        type="text"
-        id="bill-input"
-        name="bill-input"
-        onChange={handleTextChange}
-        value={textValue}
-      />
+      <div>
+        <input
+          className="billInput"
+          id="bill-input"
+          name="bill-input"
+          onChange={handleTextChange}
+          type="text"
+          value={textValue}
+        />
+      </div>
       <input
         defaultChecked={isAutomaticChecked}
         id="bill-input-automatic"
@@ -54,7 +58,13 @@ export default function BillInput() {
       <label htmlFor="bill-input-automatic">Automático</label>
       <div>
         {isAutomaticChecked || (
-          <input type="button" value="Agrega recibo" onClick={handleSubmit} />
+          <input
+            className="createBillButton"
+            disabled={isLoading}
+            type="button"
+            value={isLoading ? "Agregando" : "Agrega recibo"}
+            onClick={handleSubmit}
+          />
         )}
       </div>
     </>

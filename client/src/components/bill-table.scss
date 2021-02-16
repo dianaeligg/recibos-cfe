@@ -1,5 +1,10 @@
-.bill-table {
+.bill-table-wrapper {
   margin: 10px 0;
   display: flex;
   justify-content: center;
+}
+
+.bill-table {
+  border-collapse: collapse;
+  border-radius: 4px 4px 0 0;
 }

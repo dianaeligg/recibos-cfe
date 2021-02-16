@@ -14,21 +14,23 @@ app.use(express.json());
 var db = require("./models");
 
 app.get("/", (req, res) => {
-  console.log("========== / ============");
-  console.log({ __dirname });
   res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
 
 app.get("/api/bills", (req, res) => {
-  console.log("========== api/bills ============");
   db.Bill.findAll().then((data) => {
     res.json(data);
   });
 });
 
 app.post("/api/bill", ({ body }, res) => {
+  // const [_, account, date, cost] = body.info.split(" ");
   console.log({ body });
-  const [_, account, date, cost] = body.info.split(" ");
+  const account = body.info.substr(2, 12);
+  const date = body.info.substr(14, 6);
+  const cost = body.info.substr(20, 9);
+
+  console.log({ account, date, cost });
 
   const newDate = `20${date.substr(0, 2)}/${date.substr(2, 2)}/${date.substr(
     4,
@@ -36,11 +38,10 @@ app.post("/api/bill", ({ body }, res) => {
   )}`;
   const bill = {
     account,
-    date: new Date(newDate),
+    billDate: new Date(newDate),
     cost: Number(cost),
+    manualDate: new Date(),
   };
-
-  console.log({ bill });
 
   db.Bill.create(bill).then((data) => res.json(data));
 });
